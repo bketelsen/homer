@@ -27,6 +27,9 @@ curl -Lo /etc/yum.repos.d/ganto-lxc4-fedora-"${RELEASE}".repo https://copr.fedor
 # umoci copr
 curl -Lo /etc/yum.repos.d/ganto-umoci-fedora-"${RELEASE}".repo https://copr.fedorainfracloud.org/coprs/ganto/umoci/repo/fedora-"${RELEASE}"/ganto-umoci-fedora-"${RELEASE}".repo
 
+# this installs incus packages
+rpm-ostree install incus incus-agent edk2-ovmf
+
 #### Example for enabling a System Unit File
 
 systemctl disable podman.socket
