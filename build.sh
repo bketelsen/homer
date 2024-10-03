@@ -17,6 +17,9 @@ rpm-ostree install screen
 
 # cockpit extensions
 rpm-ostree install cockpit-files
+git clone https://github.com/45drives/cockpit-zfs-manager.git
+cp -r cockpit-zfs-manager/zfs /usr/share/cockpit
+rm -rf cockpit-zfs-manager
 
 # get incus copr
 curl -Lo /etc/yum.repos.d/ganto-lxc4-fedora-"${RELEASE}".repo https://copr.fedorainfracloud.org/coprs/ganto/lxc4/repo/fedora-"${RELEASE}"/ganto-lxc4-fedora-"${RELEASE}".repo
