@@ -15,8 +15,8 @@ RELEASE="$(rpm -E %fedora)"
 # this installs a package from fedora repos
 rpm-ostree install screen
 
-# this would install a package from rpmfusion
-# rpm-ostree install vlc
+# cockpit extensions
+rpm-ostree install cockpit-files
 
 # get incus copr
 curl -Lo /etc/yum.repos.d/ganto-lxc4-fedora-"${RELEASE}".repo https://copr.fedorainfracloud.org/coprs/ganto/lxc4/repo/fedora-"${RELEASE}"/ganto-lxc4-fedora-"${RELEASE}".repo
