@@ -18,6 +18,12 @@ rpm-ostree install screen
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
 
+# get incus copr
+curl -Lo /etc/yum.repos.d/ganto-lxc4-fedora-"${RELEASE}".repo https://copr.fedorainfracloud.org/coprs/ganto/lxc4/repo/fedora-"${RELEASE}"/ganto-lxc4-fedora-"${RELEASE}".repo
+
+# umoci copr
+curl -Lo /etc/yum.repos.d/ganto-umoci-fedora-"${RELEASE}".repo https://copr.fedorainfracloud.org/coprs/ganto/umoci/repo/fedora-"${RELEASE}"/ganto-umoci-fedora-"${RELEASE}".repo
+
 #### Example for enabling a System Unit File
 
 systemctl disable podman.socket
