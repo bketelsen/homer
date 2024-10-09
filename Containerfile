@@ -60,11 +60,10 @@ RUN mkdir -p /var/lib/alternatives && \
     ostree container commit && \
     mkdir -p /var/lib && mv /staged-alternatives /var/lib/alternatives && \
     mkdir -p /var/tmp && \
-    chmod -R 1777 /var/tmp
+    chmod -R 1777 /var/tmp && \
+    rm -rf /ctx
 
-RUN mkdir -p /var/lib/alternatives && \
-    /ctx/build_files/build-dx.sh && \
-    ostree container commit
+
 ## NOTES:
 # - /var/lib/alternatives is required to prevent failure with some RPM installs
 # - All RUN commands must end with ostree container commit
