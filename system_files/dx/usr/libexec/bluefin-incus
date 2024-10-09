@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+# All the pieces needed to enable incus on Developer Experience Hosts
+# This script is meant to be run on a {bluefin,aurora}-dx host
+
+# if current user is root, warn and exit
+
+if [ "$EUID" -eq 0 ]
+then
+    echo "This script should not be run as root"
+    exit
+fi
+
+# add user to incus-admin group
+
+sudo usermod -aG incus-admin $USER
+
+# check for, then add necessary entries to /etc/subuid and /etc/subgid
+echo ""
+echo "Checking for necessary entries in /etc/subuid and /etc/subgid"
+if grep -q "root:1000000:1000000000" /etc/subuid
+then
+    echo ""
+    echo "  * subuid root range"
+else
+    echo "root:1000000:1000000000" | sudo tee -a /etc/subuid
+fi
+
+if grep -q "root:1000000:1000000000" /etc/subgid
+then
+    echo ""
+    echo "  * subgid root range"
+else
+    echo "root:1000000:1000000000" | sudo tee -a /etc/subgid
+fi
+
+if grep -q "root:$UID:1" /etc/subgid
+then
+    echo ""
+    echo "  * subgid root->user"
+else
+    echo "root:$UID:1" | sudo tee -a /etc/subgid
+fi
+
+if grep -q "root:$UID:1" /etc/subuid
+then
+    echo ""
+    echo "  * subuid root->user"
+else
+    echo "root:$UID:1" | sudo tee -a /etc/subuid
+fi
+
+# enable incus services
+
+echo ""
+echo "Enabling incus services"
+sudo systemctl enable --now incus-workaround.service
+sudo systemctl enable --now lxcfs
+sudo systemctl enable --now incus.socket
+sudo systemctl start incus.service
+sudo systemctl enable incus-startup
+
+# run incus admin init
+echo ""
+echo "Initializing Incus"
+echo ""
+echo "Choose your Incus installation type:"
+IOPTION=$(gum choose Minimal Custom Cancel)
+if [ "$IOPTION" = "Cancel" ]
+then
+    echo "You have chosen to cancel the Incus installation process"
+    exit
+else
+    if [ "$IOPTION" = "Minimal" ]
+    then
+        sudo incus admin init --minimal
+        echo ""
+        echo "Adding the incus bridge to the trusted firewall zone"
+        sudo firewall-cmd --zone=trusted --change-interface=incusbr0 --permanent
+        sudo firewall-cmd --reload
+    else
+        sudo incus admin init
+        echo ""
+        echo "Add the incus bridge to the trusted firewall zone"
+        echo "  sudo firewall-cmd --zone=trusted --change-interface=your-bridge --permanent"
+        echo "  sudo firewall-cmd --reload"
+    fi
+fi
+echo ""
+echo "Incus has been installed. You can now run 'incus' to manage your containers."
