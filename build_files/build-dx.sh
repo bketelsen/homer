@@ -4,7 +4,7 @@
 set -ouex pipefail
 
 # Apply IP Forwarding before installing Docker to prevent messing with LXC networking
-sysctl -p
+#sysctl -p
 
 cp /ctx/packages.json /tmp/packages.json
 rsync -rvK /ctx/system_files/dx/ /
