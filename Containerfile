@@ -53,7 +53,7 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 
 
 RUN mkdir -p /var/lib/alternatives && \
-    /ctx/build-dx.sh && \
+    /ctx/build_files/build-dx.sh && \
     ostree container commit
 ## NOTES:
 # - /var/lib/alternatives is required to prevent failure with some RPM installs
