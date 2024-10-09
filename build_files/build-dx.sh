@@ -10,6 +10,7 @@ cp /ctx/packages.json /tmp/packages.json
 rsync -rvK /ctx/system_files/dx/ /
 
 # /ctx/build_files/packages-dx.sh
+/ctx/build_files/copr-repos-dx.sh
 /ctx/build_files/fetch-install.sh
 /ctx/build_files/workarounds.sh
 /ctx/build_files/systemd-dx.sh
