@@ -39,7 +39,24 @@ ARG SOURCE_SUFFIX="-hci"
 ARG SOURCE_TAG="stable-zfs"
 
 FROM scratch AS ctx
-COPY / /ctx/
+COPY / /
+
+# Build, cleanup, commit.
+RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
+    --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=bind,from=akmods,source=/rpms,target=/tmp/akmods \
+    --mount=type=bind,from=nvidia_cache,source=/rpms,target=/tmp/akmods-rpms \
+    --mount=type=bind,from=kernel_cache,source=/tmp/rpms,target=/tmp/kernel-rpms \
+    --mount=type=bind,from=zfs_cache,source=/rpms,target=/tmp/akmods-zfs \
+    rpm-ostree cliwrap install-to-root / && \
+    mkdir -p /var/lib/alternatives && \
+    /ctx/build_files/build-dx.sh  && \
+    mv /var/lib/alternatives /staged-alternatives && \
+    /ctx/build_files/clean-stage.sh && \
+    ostree container commit && \
+    mkdir -p /var/lib && mv /staged-alternatives /var/lib/alternatives && \
+    mkdir -p /var/tmp && \
+    chmod -R 1777 /var/tmp
 
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
