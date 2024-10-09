@@ -39,7 +39,7 @@ ARG SOURCE_SUFFIX="-hci"
 ARG SOURCE_TAG="stable-zfs"
 
 FROM scratch AS ctx
-COPY / /ctx
+COPY / /ctx/
 
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
