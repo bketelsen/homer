@@ -2,6 +2,7 @@
 
 # SCRIPT VERSION
 GROUP_SETUP_VER=1
+mkdir -p /etc/ublue
 GROUP_SETUP_VER_FILE="/etc/ublue/dx-groups"
 GROUP_SETUP_VER_RAN=$(cat "$GROUP_SETUP_VER_FILE")
 
@@ -17,7 +18,6 @@ for user in $wheelarray
 do
   usermod -aG docker $user
   usermod -aG incus-admin $user
-  usermod -aG lxd $user
   usermod -aG libvirt $user
 done
 
