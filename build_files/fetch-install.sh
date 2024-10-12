@@ -10,7 +10,7 @@ install -c -m 0755 /tmp/starship /usr/bin
 echo 'eval "$(starship init bash)"' >> /etc/bashrc
 
 # cockpit extensions
-rpm-ostree install cockpit-files cockpit-machines cockpit-networkmanager cockpit-ostree cockpit-pcp cockpit-podman cockpit-selinux cockpit-storaged cockpit-system
+rpm-ostree install cockpit-files cockpit-machines cockpit-networkmanager cockpit-ostree cockpit-pcp cockpit-podman cockpit-selinux cockpit-storaged cockpit-system cockpit-file-sharing
 git clone https://github.com/45drives/cockpit-zfs-manager.git
 cp -r cockpit-zfs-manager/zfs /usr/share/cockpit
 rm -rf cockpit-zfs-manager
