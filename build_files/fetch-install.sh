@@ -9,7 +9,8 @@ install -c -m 0755 /tmp/starship /usr/bin
 # shellcheck disable=SC2016
 echo 'eval "$(starship init bash)"' >> /etc/bashrc
 
-# cockpit extensions
+# cockpit and extensions
+curl -sSL https://repo.45drives.com/setup | bash
 rpm-ostree install cockpit-files cockpit-machines cockpit-networkmanager cockpit-ostree cockpit-pcp cockpit-podman cockpit-selinux cockpit-storaged cockpit-system cockpit-file-sharing
 git clone https://github.com/45drives/cockpit-zfs-manager.git
 cp -r cockpit-zfs-manager/zfs /usr/share/cockpit
