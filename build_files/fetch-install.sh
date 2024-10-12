@@ -12,8 +12,6 @@ echo 'eval "$(starship init bash)"' >> /etc/bashrc
 # cockpit and extensions
 rpm-ostree install cockpit-files cockpit-machines cockpit-networkmanager cockpit-ostree cockpit-pcp cockpit-podman cockpit-selinux cockpit-storaged cockpit-system 
 
-curl -sSL https://repo.45drives.com/setup | bash
-rpm-ostree install cockpit-file-sharing
 git clone https://github.com/45drives/cockpit-zfs-manager.git
 cp -r cockpit-zfs-manager/zfs /usr/share/cockpit
 rm -rf cockpit-zfs-manager
